@@ -6,6 +6,7 @@ import br.com.StreamChallenge.dto.video.VideoDto;
 import br.com.StreamChallenge.dto.video.VideoDtoComplete;
 import br.com.StreamChallenge.dto.video.VideoListDto;
 import br.com.StreamChallenge.service.VideoService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,6 +19,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/videos")
+@SecurityRequirement(name = "bearer-key")
 public class VideoController {
     @Autowired
     private VideoService service;

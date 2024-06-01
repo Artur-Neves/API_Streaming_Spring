@@ -6,6 +6,7 @@ import br.com.StreamChallenge.dto.category.CategoryDto;
 import br.com.StreamChallenge.dto.category.CategoryListDto;
 import br.com.StreamChallenge.dto.video.VideoListDto;
 import br.com.StreamChallenge.service.CategoryService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping("/category")
+@SecurityRequirement(name = "bearer-key")
 public class CategoryController {
     @Autowired
     private CategoryService service;

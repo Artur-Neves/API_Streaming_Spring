@@ -30,13 +30,14 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class VideoServiceTest extends BaseServiceTest<VideoService> {
     @InjectMocks
-    protected VideoService service;
+    private VideoService service;
     @Mock
-    protected Pageable pageable;
+    private Pageable pageable;
     @Mock
     private VideoRepository repository;
     @Mock
-    protected Video videoMock;
+    private Video videoMock;
+
 
 
     @DisplayName("O service deve chamar o repository.save e deve retorna-lo")

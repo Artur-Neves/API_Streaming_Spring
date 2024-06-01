@@ -1,27 +1,49 @@
 package br.com.StreamChallenge.domain;
 
-import jakarta.persistence.Entity;
+import br.com.StreamChallenge.dto.User.UserDto;
+import br.com.StreamChallenge.dto.User.UserUpdateDto;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "user_entity")
 public class User implements UserDetails {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter
     private Long id;
+    @Column(unique = true)
     private String login;
     private String password;
-    private List<Roles> perfils;
+    @Getter
+    @Enumerated(EnumType.STRING)
+    @ElementCollection(targetClass = Roles.class, fetch = FetchType.EAGER)
+    @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
+    private Set<Roles> roles = new HashSet<>();
+
+    public User(UserDto userDto){
+        this.login=userDto.login();
+        this.password=userDto.password();
+        this.roles =userDto.roles();
+    }
+    public User(UserUpdateDto userDto){
+        this.password=userDto.password();
+        this.roles =userDto.roles();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return perfils;
+        return roles;
     }
 
     @Override
@@ -36,21 +58,32 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return true;
+    }
+    public void passwordEncoder(){
+        this.password= BCrypt.hashpw( this.password,BCrypt.gensalt());
+    }
+    public void addRoles(Roles roles){
+        this.getRoles().add(roles);
+    }
+
+    public void merge(User user) {
+        this.password = user.getPassword();
+        this.roles = user.getRoles();
     }
 }
