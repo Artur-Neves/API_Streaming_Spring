@@ -6,7 +6,10 @@
 
 Este projeto foi desenvolvido com base no desafio 5 proposto pela escola de programação Alura. Ele tem como objetivo praticar e consolidar os conhecimentos adquiridos sobre o Spring Framework e outras tecnologias.
 
-
+<br>
+<img src="IMG-20240603-WA0018.jpg" alt="Imagem com o teste de mutação realizado pelo Pitest">
+<img src="IMG-20240603-WA0017.jpg" alt="Imagem com o teste de mutação realizado pelo Pitest">
+  
   <br>
 
 ## ✔️ Técnicas e tecnologias utilizadas
